@@ -15,8 +15,7 @@ services:
     networks:
       - app_network
 
-  # Flask application service
-  flask_app:  # Indentation fixed
+  flask_app:  
     build:
       context: ..
     container_name: flask_app_container
@@ -30,7 +29,6 @@ services:
     depends_on:
       - mongo
 
-# Define the network connecting both services
 networks:
   app_network:
     driver: bridge
