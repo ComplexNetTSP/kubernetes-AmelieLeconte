@@ -6,7 +6,6 @@ WORKDIR /app
 
 # Copie le fichier requirements.txt dans le conteneur
 COPY requirements.txt .
-
 # Installe les dépendances
 RUN pip install -r requirements.txt
 

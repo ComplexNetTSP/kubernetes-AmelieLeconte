@@ -12,3 +12,25 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - "27017:27017"
+    networks:
+      - app_network
+
+  # Flask application service
+  flask_app:  # Indentation fixed
+    build:
+      context: ..
+    container_name: flask_app_container
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: "mongodb://root:example@mongo:27017/"
+    networks:
+      - app_network
+    depends_on:
+      - mongo
+
+# Define the network connecting both services
+networks:
+  app_network:
+    driver: bridge

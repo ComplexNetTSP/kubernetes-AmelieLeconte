@@ -1,8 +1,20 @@
 from flask import Flask, render_template
 import socket
+import pymongo
 from datetime import datetime
+import os
 
 app = Flask(__name__)
+
+# MongoDB connection URI (
+MONGO_URI = os.environ['MONGO_URI']
+
+# MongoDB client connection
+client = pymongo.MongoClient(MONGO_URI + 'admin') # mets le nom de la db que tu veux (précisable dans le yaml du docker compose)
+db = client.get_default_database()
+
+# Define the collection where we will store the request data
+collection = db.requests
 
 @app.route("/")
 def home():
