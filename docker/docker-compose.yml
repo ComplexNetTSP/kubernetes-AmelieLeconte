@@ -17,9 +17,8 @@ services:
 
   flask_app:  
     build:
-      context: ..
+      context: ../app1
     container_name: flask_app_container
-    restart: always
     ports:
       - "5000:5000"
     environment:
@@ -29,6 +28,35 @@ services:
     depends_on:
       - mongo
 
+
+  flask_app_2:
+    build:
+      context: ../app2
+    container_name: flask_app_2_container
+    restart: always
+    ports:
+      - "5001:5000"
+    networks:
+      - app_network
+    command: python /app/app2.py
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx_load_balancer
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - app_network
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  
+    depends_on:
+      - flask_app
+      - flask_app_2
+
 networks:
   app_network:
     driver: bridge
+
+
+
