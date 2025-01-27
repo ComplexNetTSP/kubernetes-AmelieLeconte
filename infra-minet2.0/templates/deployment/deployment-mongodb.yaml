@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: {{ .Values.mongodb.image }}
+          ports:
+            - containerPort: {{ .Values.mongodb.port }}
+          resources:
+            requests:
+              memory: {{ .Values.mongodb.resources.requests.memory }}
+              cpu: {{ .Values.mongodb.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.mongodb.resources.limits.memory }}
+              cpu: {{ .Values.mongodb.resources.limits.cpu }}
