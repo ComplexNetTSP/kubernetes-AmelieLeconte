@@ -1,6 +1,11 @@
+image:
+  repository: amelique/amelique
+  tag: latest
+  pullPolicy: IfNotPresent
+
 flaskApp:
   replicas: 3
-  image: amelique/docker-flask_app:latest
+  image: amelique/amelique:latest
   resources:
     requests:
       memory: "100Mi"
@@ -20,6 +25,11 @@ mongodb:
       memory: "200Mi"
       cpu: "200m"
 
+webnodb:
+  image: "amelique/docker-flask_app:latest"  
+  replicas: 3
+
+
 ingress:
   enabled: true
   host:
@@ -29,8 +39,6 @@ ingress:
 service:
   port: 8080
 
-serviceAccount:
-  create: true
 
 autoscaling:
   enabled: true

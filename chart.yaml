@@ -1,4 +1,4 @@
 apiVersion: v2
-name: infra-minet2.0
+name: "infra-minet2-0"
 description: kub
 version: 0.1.0

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webnodb
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webnodb
+  template:
+    metadata:
+      labels:
+        app: webnodb
+    spec:
+      containers:
+        - name: webnodb
+          image: {{ .Values.webnodb.image | default "amelique/docker-flask_app:latest" }}
+          ports:
+            - containerPort: 5000
+          env:
+            - name: FLASK_ENV
+              value: "production"
+            - name: FLASK_APP
+              value: "app.py"  
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "500m"
+            requests:
+              memory: "100Mi"
+              cpu: "250m"
